@@ -1,0 +1,11 @@
+<resources>
+
+    <style name="ActionbarStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:titleTextStyle">@style/ActionbarTextStyle</item>
+    </style>
+
+    <style name="ActionbarTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+</resources>
