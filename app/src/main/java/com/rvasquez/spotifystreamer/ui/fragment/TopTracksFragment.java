@@ -19,6 +19,8 @@ import com.rvasquez.spotifystreamer.ui.adapter.TopTracksAdapter;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import kaaes.spotify.webapi.android.models.Track;
 import kaaes.spotify.webapi.android.models.Tracks;
 
@@ -29,10 +31,14 @@ public class TopTracksFragment extends Fragment implements LoaderManager.LoaderC
     private final static String ARGS_ARTIST_ID = "artist_id";
     private final static int LOADER_ID = 1123;
 
-    private RecyclerView mRecyclerView;
+    @InjectView(R.id.rv_top_tracks)
+    RecyclerView mRecyclerView;
+    @InjectView(R.id.empty_view)
+    TextView mEmptyText;
+    @InjectView(R.id.progress)
+    ProgressBar mProgress;
+
     private RecyclerView.LayoutManager mLayoutManager;
-    private TextView mEmptyText;
-    private ProgressBar mProgress;
 
     private TopTracksAdapter mAdapter;
 
@@ -61,9 +67,7 @@ public class TopTracksFragment extends Fragment implements LoaderManager.LoaderC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_top_tracks, container, false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_top_tracks);
-        mEmptyText = (TextView) view.findViewById(R.id.empty_view);
-        mProgress = (ProgressBar) view.findViewById(R.id.progress);
+        ButterKnife.inject(this, view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);

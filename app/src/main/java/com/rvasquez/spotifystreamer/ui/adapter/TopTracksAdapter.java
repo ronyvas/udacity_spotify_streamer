@@ -13,6 +13,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import kaaes.spotify.webapi.android.models.Track;
 
 /**
@@ -40,7 +42,8 @@ public class TopTracksAdapter extends RecyclerView.Adapter<TopTracksAdapter.View
         String trackName = String.format("%d. %s", position + 1, track.name);
         holder.trackName.setText(trackName);
         holder.albumName.setText(track.album.name);
-        if (track.album.images.size() > 1) {
+        //Get the second item from image array since it contains the proper thumbnail image.
+        if (track.album.images != null && track.album.images.size() > 1) {
             Picasso.with(mContext).load(track.album.images.get(1).url).into(holder.thumbnail);
         } else {
             holder.thumbnail.setImageResource(R.drawable.bg_spotify_black);
@@ -68,16 +71,17 @@ public class TopTracksAdapter extends RecyclerView.Adapter<TopTracksAdapter.View
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
+        @InjectView(R.id.img_top_track_thumbnail)
         ImageView thumbnail;
+        @InjectView(R.id.txt_top_track_name)
         TextView trackName;
+        @InjectView(R.id.txt_top_track_album)
         TextView albumName;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
-            this.thumbnail = (ImageView) itemView.findViewById(R.id.img_top_track_thumbnail);
-            this.trackName = (TextView) itemView.findViewById(R.id.txt_top_track_name);
-            this.albumName = (TextView) itemView.findViewById(R.id.txt_top_track_album);
+            ButterKnife.inject(this, itemView);
 
         }
     }

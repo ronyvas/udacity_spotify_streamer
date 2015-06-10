@@ -14,6 +14,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import kaaes.spotify.webapi.android.models.Artist;
 
 /**
@@ -38,7 +40,8 @@ public class ArtistSearchAdapter extends RecyclerView.Adapter<ArtistSearchAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         Artist artist = mItems.get(position);
         holder.artistName.setText(artist.name);
-        if (artist.images.size() > 1) {
+        //Get the second item from image array since it contains the proper thumbnail image.
+        if (artist.images != null && artist.images.size() > 1) {
             Picasso.with(mContext).load(artist.images.get(1).url).into(holder.thumbnail);
         } else {
             holder.thumbnail.setImageResource(R.drawable.bg_spotify_black);
@@ -66,13 +69,14 @@ public class ArtistSearchAdapter extends RecyclerView.Adapter<ArtistSearchAdapte
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        @InjectView(R.id.img_artist_result_thumbnail)
         ImageView thumbnail;
+        @InjectView(R.id.txt_artist_result_name)
         TextView artistName;
 
         public ViewHolder(View view) {
             super(view);
-            this.thumbnail = (ImageView) view.findViewById(R.id.img_artist_result_thumbnail);
-            this.artistName = (TextView) view.findViewById(R.id.txt_artist_result_name);
+            ButterKnife.inject(this, view);
             view.setOnClickListener(this);
         }
 
